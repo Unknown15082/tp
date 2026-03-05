@@ -320,8 +320,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+4. The system should respond to user commands within 2 seconds under normal usage conditions.
+5. The application should store customer data locally in a file so that the user can retain their data between application sessions.
+6. The user interface should remain usable on screens with a resolution of at least 1280×720.
+7. The system should prevent invalid customer data (e.g., invalid phone numbers or email formats) from being stored.
+8. The system should not require an Internet connection for normal operation.
+9. The system should ensure that customer data is automatically saved after each successful command to prevent data loss in case the application closes unexpectedly.
 
 ### Glossary
 
