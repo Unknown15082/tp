@@ -276,13 +276,31 @@ _{Explain here how the data archiving feature will be implemented}_
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| -------- | ----------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------- |
+| `* *`    | first-time user                                 | see a short welcome message explaining what ClientEase does                     | understand the purpose of the app immediately                                             |
+| `* *`    | first-time user                                 | look at sample customer data when I open the app                                | quickly understand how customer information is structured                                 |
+| `* *`    | first-time user                                 | look through sample customer profiles                                           | see what kinds of details I am able to store                                              |
+| `* * *`  | first-time user                                 | easily identify the main actions (add, edit, delete)                            | not feel overwhelmed when first using the app                                             |
+| `* * *`  | first-time user                                 | edit an existing customer entry                                                 | understand how updates to customer information work                                       |
+| `* * *`  | first-time user                                 | add a new customer using test data                                              | try out the app without fear of making mistakes                                           |
+| `* *`    | beginner user                                   | set a due date for an order                                                     | manage upcoming deadlines                                                                 |
+| `* * *`  | beginner user                                   | mark an order as completed                                                      | track which requests have been fulfilled                                                  |
+| `* *`    | beginner user                                   | record whether an order is delivery or self-collection                          | coordinate arrangements properly                                                          |
+| `* *`    | beginner user                                   | calculate delivery cost based on location                                       | charge customers correctly                                                                |
+| `* *`    | beginner user                                   | review a customer's order history                                               | confirm their previous preferences                                                        |
+| `* * *`  | beginner user                                   | view only active orders                                                         | focus on current tasks                                                                    |
+| `*`      | user more familiar with the app                 | try to get familiar with the CLI                                                | start to use the app more efficiently                                                     |
+| `* * *`  | user more familiar with the app                 | make simple search queries                                                      | find customers more quickly                                                               |
+| `* *`    | frequent user                                   | set the app to open at startup                                                  | start working inside the app immediately                                                  |
+| `*`      | tech-savvy user                                 | use the CLI to input commands                                                   | perform the tasks faster than on a graphical interface                                    |
+| `*`      | expert user                                     | create complex searching queries                                                | find customers that match specific sets of criterias                                      |
+| `* *`    | expert user                                     | sort the customers based on the distance from my warehouse                      | better plan the delivery trip                                                             |
+| `*`      | long-time user                                  | create shortcuts and aliases for frequent tasks                                 | minimize repetition and speed up my workflow                                              |
+| `* *`    | expert user                                     | hide unused data                                                                | not be distracted by irrelevant information                                               |
+| `* *`    | business owner identifying loyal customers      | filter customer lists by number of purchases                                    | quickly find repeat buyers to send thank you messages                                     |
+| `* *`    | user tracking customer loyalty                  | sort customers by total purchase amount or frequency                            | identify top repeat buyers for special thank you gestures                                 |
+| `* *`    | user managing customer data                     | easily filter the customers' profile by their "repeat customer" tag             | easily sort and locate them for personalised outreach                                     |
+| `*`      | business owner preparing outreach campaigns     | export filtered lists of repeat customers directly from the app                 | easily integrate them into email or messaging tools for sending personalized thanks       |
 
 *{More to be added}*
 
