@@ -306,31 +306,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `ClieantEase` and the **Actor** is the `user`, unless specified otherwise)
-
-**Use case: Delete a person**
-
-**MSS**
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-
-    Use case ends.
-
-**Extensions**
-
-* 2a. The list is empty.
-
-  Use case ends.
-
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
-      **Use case: Add a customer**
+(For all use cases below, the **System** is the `ClientEase` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Add a customer**
 
@@ -356,6 +332,55 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. ClientEase warns the user about the duplicate customer.
 
       Use case ends.
+
+**Use case: Find a customer**
+
+**MSS**
+
+1.  User enters a command to search for a customer using name, tag, or other keywords.
+2.  ClientEase filters the customer list to those matching the search criteria.
+3.  ClientEase displays the matching customer profiles.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The user provides invalid search format.
+
+    * 1a1. ClientEase shows an error message indicating the invalid search query.
+
+      Use case resumes at step 1.
+
+* 2a. No customers match the search criteria.
+
+    * 2a1. ClientEase shows an empty list and a message indicating no matches were found.
+
+      Use case ends.
+
+**Use case: Delete a person**
+
+**MSS**
+
+1.  User requests to list persons
+2.  ClientEase shows a list of persons
+3.  User requests to delete a specific person in the list
+4.  ClientEase deletes the person
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. ClientEase shows an error message.
+
+      Use case resumes at step 2.
+
+
 
 *{More to be added}*
 
