@@ -306,7 +306,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `ClieantEase` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `ClientEase` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
@@ -356,6 +356,35 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. ClientEase warns the user about the duplicate customer.
 
       Use case ends.
+
+**Use case: Edit a customer's details**
+
+**Preconditions: ClientEase has at least one customer record.**
+
+**MSS**
+
+1.  User requests to find a customer using a keyword.
+2.  ClientEase displays a list of matching customers.
+3.  User selects a customer from the list.
+4.  User requests to edit the selected customer's details by providing the new details. 
+5.  ClientEase validates the new details.
+6.  ClientEase updates the customer record and displays the updated customer profile. 
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No customers match the search keyword.
+
+    * 1a1. ClientEase displays a message indicating that no customers were found.
+  
+      Use case ends.
+
+* 5a. The new details provided are invalid.
+
+    * 5a1. ClientEase displays an error message indicating the invalid field.
+  
+      Use case resumes at step 4.
 
 *{More to be added}*
 
