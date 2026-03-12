@@ -44,7 +44,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/coder114514)]
 
 * Role: Developer
-* Responsibilities: ?
+* Responsibilities: Reviewer
 
 ### Sureshkumar Sheasu
 
