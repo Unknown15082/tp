@@ -83,9 +83,17 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_missingOptionalFields_returnsPersonWithDefaults() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, null, null, null, null);
-        Person expectedPerson = new Person(new Name(VALID_NAME), Products.empty(), Location.empty(),
+    public void toModelType_missingProducts_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, null, VALID_LOCATION, VALID_DEADLINE,
+                VALID_CONTACT);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Products.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_missingOptionalFields_returnsPersonWithEmptyOptionals() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PRODUCTS, null, null, null);
+        Person expectedPerson = new Person(new Name(VALID_NAME), new Products(VALID_PRODUCTS), Location.empty(),
                 Deadline.empty(), Contact.empty());
         assertEquals(expectedPerson, person.toModelType());
     }

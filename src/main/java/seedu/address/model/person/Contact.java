@@ -17,9 +17,27 @@ public class Contact {
 
     public static final String MESSAGE_CONSTRAINTS = "Error: Invalid contact information.";
 
+    /** Regex for validating local phone numbers (exactly 8 digits) */
     private static final String LOCAL_PHONE_REGEX = "\\d{8}";
+
+    /** Regex for validating international phone numbers
+     *
+     * '+' then 2–3 digit country code
+     * 1–12 digit subscriber number
+     */
     private static final String INTERNATIONAL_PHONE_REGEX = "\\+\\d{2,3}\\d{1,12}";
-    private static final String EMAIL_REGEX = "[A-Za-z0-9][A-Za-z0-9.-]*@[A-Za-z0-9][A-Za-z0-9.-]*";
+
+    /**
+     * Regex for validating email addresses
+     *
+     * [A-Za-z0-9]     first character must be alphanumeric
+     * [A-Za-z0-9.-]*  then zero or more alphanumerics, dots, or hyphens
+     * @              exactly one '@'
+     * [A-Za-z0-9]     domain must start with alphanumeric
+     * [A-Za-z0-9.-]*  then zero or more alphanumerics, dots or hyphens
+     */
+    private static final String EMAIL_REGEX =
+            "[A-Za-z0-9][A-Za-z0-9.-]*@[A-Za-z0-9][A-Za-z0-9.-]*";
 
     private static final Contact EMPTY = new Contact(Collections.emptyList());
 
@@ -45,7 +63,7 @@ public class Contact {
      * Returns an empty contact to represent missing input.
      */
     public static Contact empty() {
-        return EMPTY;
+        return EMPTY; // shared empty contact list
     }
 
     /**

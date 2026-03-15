@@ -39,7 +39,7 @@ public class AddCommand extends Command {
     private final Person toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddCommand to add the specified {@code Person}.
      */
     public AddCommand(Person person) {
         requireNonNull(person);
@@ -54,8 +54,8 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName()));
+        model.addPerson(toAdd); // saves new customer in model
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName())); // shows success message
     }
 
     @Override

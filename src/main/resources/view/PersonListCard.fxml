@@ -26,7 +26,7 @@
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <Label fx:id="products" styleClass="cell_small_label" text="\$products" />
+      <Label fx:id="products" styleClass="cell_small_label" text="\$products" wrapText="true" />
       <Label fx:id="locationValue" styleClass="cell_small_label" text="\$location" />
       <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
       <Label fx:id="contact" styleClass="cell_small_label" text="\$contact" />

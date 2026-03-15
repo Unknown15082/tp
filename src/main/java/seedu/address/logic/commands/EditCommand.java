@@ -52,8 +52,10 @@ public class EditCommand extends Command {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * Creates an EditCommand to update the specified customer.
+     *
+     * @param index of the person in the filtered person list to edit.
+     * @param editPersonDescriptor details to edit the person with.
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
@@ -79,8 +81,8 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.setPerson(personToEdit, editedPerson); // updates customer record
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS); // refreshes list view
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -97,7 +99,8 @@ public class EditCommand extends Command {
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         Contact updatedContact = editPersonDescriptor.getContact().orElse(personToEdit.getContact());
 
-        return new Person(updatedName, updatedProducts, updatedLocation, updatedDeadline, updatedContact);
+        return new Person(updatedName, updatedProducts, updatedLocation,
+                updatedDeadline, updatedContact); // creates updated customer snapshot
     }
 
     @Override
@@ -139,7 +142,7 @@ public class EditCommand extends Command {
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * A defensive copy of the fields is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);

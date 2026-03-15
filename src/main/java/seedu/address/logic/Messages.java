@@ -36,15 +36,25 @@ public class Messages {
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(person.getName())
-                .append("; Products: ")
-                .append(person.getProducts())
-                .append("; Location: ")
+        builder.append("Name: ").append(person.getName())
+                .append("\n")
+                .append(formatProducts(person))
+                .append("\nLocation: ")
                 .append(person.getLocation())
-                .append("; Deadline: ")
+                .append("\nDeadline: ")
                 .append(person.getDeadline())
-                .append("; Contact: ")
+                .append("\nContact: ")
                 .append(person.getContact());
+        return builder.toString();
+    }
+
+    private static String formatProducts(Person person) {
+        StringBuilder builder = new StringBuilder("Products:");
+        int index = 1;
+        for (String item : person.getProducts().getItems()) {
+            builder.append("\n- ").append(index).append(". ").append(item);
+            index++;
+        }
         return builder.toString();
     }
 

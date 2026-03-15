@@ -53,7 +53,7 @@ public class Deadline implements Comparable<Deadline> {
      * Returns an empty deadline when input is missing.
      */
     public static Deadline empty() {
-        return EMPTY;
+        return EMPTY; // shared empty deadline instance
     }
 
     /**
@@ -135,7 +135,7 @@ public class Deadline implements Comparable<Deadline> {
             return null;
         }
 
-        return date.atTime(23, 59);
+        return date.atTime(23, 59); // default time when only date is given
     }
 
     private static LocalDate parseDate(String input) {

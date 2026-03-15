@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Products {
 
     public static final String MESSAGE_CONSTRAINTS = "Error: Invalid products format.";
+    public static final String MESSAGE_PRODUCTS_REQUIRED = "Error: Products are required.";
 
     private static final int MAX_ITEM_LENGTH = 80;
     private static final String ITEM_VALIDATION_REGEX = "[\\p{Alnum} _\\-:;\\.]+";
@@ -42,7 +43,7 @@ public class Products {
      * Returns an empty products list to represent missing input.
      */
     public static Products empty() {
-        return EMPTY;
+        return EMPTY; // shared empty products list
     }
 
     /**

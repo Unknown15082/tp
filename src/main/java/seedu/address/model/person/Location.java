@@ -43,7 +43,7 @@ public class Location {
      * Returns an empty location to represent missing input.
      */
     public static Location empty() {
-        return EMPTY;
+        return EMPTY; // shared empty location
     }
 
     /**

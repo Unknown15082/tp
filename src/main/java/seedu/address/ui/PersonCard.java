@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Products;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -44,9 +45,23 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().getFullName());
-        products.setText("Products: " + person.getProducts());
+        products.setText(formatProducts(person.getProducts())); // lists products with numbering
         locationValue.setText("Location: " + person.getLocation());
         deadline.setText("Deadline: " + person.getDeadline());
         contact.setText("Contact: " + person.getContact());
+    }
+
+    private static String formatProducts(Products products) {
+        if (products.getItems().isEmpty()) {
+            return "Products:";
+        }
+
+        StringBuilder builder = new StringBuilder("Products:");
+        int index = 1;
+        for (String item : products.getItems()) {
+            builder.append("\n- ").append(index).append(". ").append(item);
+            index++;
+        }
+        return builder.toString();
     }
 }

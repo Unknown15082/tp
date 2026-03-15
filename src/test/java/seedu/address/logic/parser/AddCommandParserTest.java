@@ -22,6 +22,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTACT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRODUCTS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRODUCTS_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
@@ -92,8 +93,8 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
-        Person expectedPerson = new Person(new Name(AMY.getName().getFullName()), Products.empty(), Location.empty(),
-                Deadline.empty(), Contact.empty());
+        Person expectedPerson = new Person(new Name(AMY.getName().getFullName()), Products.empty(),
+                Location.empty(), Deadline.empty(), Contact.empty());
 
         assertParseSuccess(parser, NAME_DESC_AMY, new AddCommand(expectedPerson));
     }

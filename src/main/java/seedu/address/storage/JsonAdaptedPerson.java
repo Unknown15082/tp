@@ -43,10 +43,16 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().getFullName();
-        products = source.getProducts().getItems().isEmpty() ? null : source.getProducts().toString();
-        location = source.getLocation().getValue().isBlank() ? null : source.getLocation().getValue();
-        deadline = source.getDeadline().isEmpty() ? null : source.getDeadline().toString();
-        contact = source.getContact().getEntries().isEmpty() ? null : source.getContact().toString();
+        products = source.getProducts().toString(); // products are required
+        location = source.getLocation().getValue().isBlank()
+                ? null
+                : source.getLocation().getValue(); // store null when location is missing
+        deadline = source.getDeadline().isEmpty()
+                ? null
+                : source.getDeadline().toString(); // store null when deadline is missing
+        contact = source.getContact().getEntries().isEmpty()
+                ? null
+                : source.getContact().toString(); // store null when contact is missing
     }
 
     /**
@@ -63,15 +69,16 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        Products modelProducts = Products.empty();
-        if (products != null) {
-            if (!Products.isValidProducts(products)) {
-                throw new IllegalValueException(Products.MESSAGE_CONSTRAINTS);
-            }
-            modelProducts = new Products(products);
+        if (products == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Products.class.getSimpleName()));
         }
+        if (!Products.isValidProducts(products)) {
+            throw new IllegalValueException(Products.MESSAGE_CONSTRAINTS);
+        }
+        Products modelProducts = new Products(products); // products are required
 
-        Location modelLocation = Location.empty();
+        Location modelLocation = Location.empty(); // defaults when location is missing
         if (location != null) {
             if (!Location.isValidLocation(location)) {
                 throw new IllegalValueException(Location.MESSAGE_CONSTRAINTS);
@@ -79,7 +86,7 @@ class JsonAdaptedPerson {
             modelLocation = new Location(location);
         }
 
-        Deadline modelDeadline = Deadline.empty();
+        Deadline modelDeadline = Deadline.empty(); // defaults when deadline is missing
         if (deadline != null && !deadline.isBlank()) {
             if (!Deadline.isValidDeadline(deadline)) {
                 throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
@@ -87,7 +94,7 @@ class JsonAdaptedPerson {
             modelDeadline = new Deadline(deadline);
         }
 
-        Contact modelContact = Contact.empty();
+        Contact modelContact = Contact.empty(); // defaults when contact is missing
         if (contact != null) {
             if (!Contact.isValidContact(contact)) {
                 throw new IllegalValueException(Contact.MESSAGE_CONSTRAINTS);
