@@ -150,9 +150,12 @@ Format: `clear`
 
 ### Exiting the program : `exit`
 
-Exits the program.
+Exits the program after displaying a farewell message with the current customer count.
 
 Format: `exit`
+
+* A farewell message will be displayed: `Goodbye! Exiting ClientEase. You have <N> customer(s) saved.`
+* The app will close automatically after a short delay.
 
 ### Saving the data
 
@@ -198,3 +201,4 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
+**Exit** | `exit`
