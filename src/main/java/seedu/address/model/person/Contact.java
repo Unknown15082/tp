@@ -17,6 +17,8 @@ public class Contact {
 
     public static final String MESSAGE_CONSTRAINTS = "Error: Invalid contact information.";
 
+    public static final int MAX_EMAIL_LENGTH = 100;
+
     /**
      * Regex for validating local phone numbers (exactly 8 digits)
      */
@@ -144,6 +146,6 @@ public class Contact {
     }
 
     private static boolean isValidEmail(String candidate) {
-        return candidate.matches(EMAIL_REGEX);
+        return candidate.length() <= MAX_EMAIL_LENGTH && candidate.matches(EMAIL_REGEX);
     }
 }
