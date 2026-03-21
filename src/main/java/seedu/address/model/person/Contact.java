@@ -137,6 +137,7 @@ public class Contact {
             return Optional.empty();
         }
 
+        normalizedEntries.sort(String::compareTo);
         return Optional.of(Collections.unmodifiableList(normalizedEntries));
     }
 

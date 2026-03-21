@@ -12,6 +12,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Contact;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -53,7 +54,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setDeadline(ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get()));
         }
         if (argMultimap.getValue(PREFIX_CONTACT).isPresent()) {
-            editPersonDescriptor.setContact(ParserUtil.parseContact(argMultimap.getValue(PREFIX_CONTACT).get()));
+            String rawContact = argMultimap.getValue(PREFIX_CONTACT).get();
+            editPersonDescriptor.setContact(rawContact.trim().isEmpty()
+                    ? Contact.empty()
+                    : ParserUtil.parseContact(rawContact));
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

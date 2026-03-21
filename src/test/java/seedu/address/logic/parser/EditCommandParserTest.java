@@ -154,6 +154,18 @@ public class EditCommandParserTest {
     }
 
     @Test
+    public void parse_emptyContactValue_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_CONTACT;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setContact(Contact.empty());
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
     public void parse_multipleRepeatedFields_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + INVALID_PRODUCTS_DESC + PRODUCTS_DESC_BOB;

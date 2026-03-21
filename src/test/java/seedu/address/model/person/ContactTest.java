@@ -64,4 +64,11 @@ public class ContactTest {
 
         assertTrue(contact.equals(new Contact("john@example.com")));
     }
+
+    @Test
+    public void equals_entryOrderInsensitive() {
+        Contact contact = new Contact("91234567; alice@example.com");
+
+        assertTrue(contact.equals(new Contact("alice@example.com; 91234567")));
+    }
 }

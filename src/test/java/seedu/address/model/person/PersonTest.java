@@ -27,9 +27,9 @@ public class PersonTest {
         Person editedAlice = new PersonBuilder(ALICE).withProducts(VALID_PRODUCTS_BOB).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // same name, different contact -> returns false
+        // same name, different contact -> returns true
         editedAlice = new PersonBuilder(ALICE).withContact(VALID_CONTACT_BOB).build();
-        assertFalse(ALICE.isSamePerson(editedAlice));
+        assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
         editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();

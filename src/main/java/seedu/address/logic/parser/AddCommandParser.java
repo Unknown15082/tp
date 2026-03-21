@@ -7,6 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Contact;
@@ -21,11 +25,21 @@ import seedu.address.model.person.Products;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    private static final Pattern PREFIX_PATTERN = Pattern.compile("(?<=^|\\s)([A-Za-z]+/)");
+    private static final Set<String> VALID_PREFIXES = Set.of(
+            PREFIX_NAME.getPrefix(),
+            PREFIX_PRODUCTS.getPrefix(),
+            PREFIX_LOCATION.getPrefix(),
+            PREFIX_DEADLINE.getPrefix(),
+            PREFIX_CONTACT.getPrefix()
+    );
+
     /**
      * Returns an {@code AddCommand} parsed from the given {@code String} of arguments.
      * @throws ParseException if the user input does not conform the expected format.
      */
     public AddCommand parse(String args) throws ParseException {
+        verifyNoUnknownPrefixes(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PRODUCTS, PREFIX_LOCATION,
                 PREFIX_DEADLINE, PREFIX_CONTACT);
 
@@ -58,7 +72,10 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Contact contact = Contact.empty(); // defaults when contact is missing
         if (argMultimap.getValue(PREFIX_CONTACT).isPresent()) {
-            contact = ParserUtil.parseContact(argMultimap.getValue(PREFIX_CONTACT).get()); // parse contact input
+            String rawContact = argMultimap.getValue(PREFIX_CONTACT).get();
+            contact = rawContact.trim().isEmpty()
+                    ? Contact.empty()
+                    : ParserUtil.parseContact(rawContact); // parse contact input
         }
 
         Person person = new Person(name, products, location, deadline, contact); // creates new customer object
@@ -66,4 +83,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         return new AddCommand(person);
     }
 
+    private void verifyNoUnknownPrefixes(String args) throws ParseException {
+        Matcher matcher = PREFIX_PATTERN.matcher(args);
+        while (matcher.find()) {
+            String prefix = matcher.group(1);
+            if (!VALID_PREFIXES.contains(prefix)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+        }
+    }
 }

@@ -99,6 +99,14 @@ public class AddCommandParserTest {
     }
 
     @Test
+    public void parse_emptyContactValue_success() {
+        Person expectedPerson = new Person(new Name(AMY.getName().getFullName()), Products.empty(),
+                Location.empty(), Deadline.empty(), Contact.empty());
+
+        assertParseSuccess(parser, NAME_DESC_AMY + " " + PREFIX_CONTACT, new AddCommand(expectedPerson));
+    }
+
+    @Test
     public void parse_compulsoryFieldMissing_failure() {
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_BOB + PRODUCTS_DESC_BOB + LOCATION_DESC_BOB + DEADLINE_DESC_BOB
@@ -134,6 +142,10 @@ public class AddCommandParserTest {
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PRODUCTS_DESC_BOB + LOCATION_DESC_BOB
                 + DEADLINE_DESC_BOB + CONTACT_DESC_BOB,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        // unknown prefix
+        assertParseFailure(parser, NAME_DESC_BOB + " foo/bar",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }
