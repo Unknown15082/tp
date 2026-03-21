@@ -1,8 +1,11 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,13 +34,20 @@ public class ProductsTest {
         assertFalse(Products.isValidProducts("Muffin,,Cookie")); // empty item
         assertFalse(Products.isValidProducts("Muffin, @@@")); // invalid items
         assertFalse(Products.isValidProducts("Tiramisu")); // not in placeholder list
-        assertFalse(Products.isValidProducts("Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie, Muffin"));
-        // exceeds max items
+        assertTrue(Products.isValidProducts("Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie, Muffin"));
+        // duplicates do not count as extra items
 
         // valid products
         assertTrue(Products.isValidProducts("Chocolate Cake"));
         assertTrue(Products.isValidProducts("Chocolate Cake, Vanilla Cake"));
         assertTrue(Products.isValidProducts("chocolate cake"));
+    }
+
+    @Test
+    public void constructor_duplicateProducts_deduplicates() {
+        Products products = new Products("Muffin, Muffin, Chocolate Cake");
+
+        assertEquals(List.of("Muffin", "Chocolate Cake"), products.getItems());
     }
 
     @Test

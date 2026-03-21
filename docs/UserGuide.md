@@ -79,6 +79,8 @@ Adds a person to ClientEase.
 
 Format: `add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]`
 
+Products are optional. If omitted, the customer will have no products recorded.
+
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Products are limited to these placeholder items: Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie.
 Enter them as a comma-separated list (up to 5 items), e.g. `products/Chocolate Cake, Muffin`.

@@ -6,10 +6,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents a Customer's products list.
@@ -28,7 +30,6 @@ public class Products {
     public static final String MESSAGE_CONSTRAINTS = "Products must be a comma-separated list with up to "
             + MAX_ITEM_COUNT + " items, chosen from:\n"
             + String.join(", ", ALLOWED_PRODUCTS) + ".";
-    public static final String MESSAGE_PRODUCTS_REQUIRED = "Error: Products are required.";
 
     private static final Map<String, String> CANONICAL_BY_LOWERCASE = buildCanonicalLookup();
 
@@ -63,19 +64,8 @@ public class Products {
      */
     public static boolean isValidProducts(String test) {
         requireNonNull(test);
-        List<String> parsedItems = splitAndTrim(test);
-        if (parsedItems.isEmpty()) {
-            return false;
-        }
-        if (parsedItems.size() > MAX_ITEM_COUNT) {
-            return false;
-        }
-        for (String item : parsedItems) {
-            if (item.isEmpty() || toCanonical(item) == null) {
-                return false;
-            }
-        }
-        return true;
+        List<String> canonicalItems = parseCanonicalItems(test);
+        return canonicalItems != null && !canonicalItems.isEmpty() && canonicalItems.size() <= MAX_ITEM_COUNT;
     }
 
     /**
@@ -119,13 +109,30 @@ public class Products {
     }
 
     private static List<String> normalizeItems(String products) {
-        List<String> rawItems = splitAndTrim(products);
-        List<String> normalizedItems = new ArrayList<>(rawItems.size());
-        for (String item : rawItems) {
-            String canonical = toCanonical(item);
-            normalizedItems.add(canonical == null ? item : canonical);
+        List<String> canonicalItems = parseCanonicalItems(products);
+        if (canonicalItems == null) {
+            return Collections.emptyList();
         }
-        return Collections.unmodifiableList(normalizedItems);
+        return Collections.unmodifiableList(canonicalItems);
+    }
+
+    private static List<String> parseCanonicalItems(String products) {
+        List<String> rawItems = splitAndTrim(products);
+        if (rawItems.isEmpty()) {
+            return null;
+        }
+        Set<String> uniqueItems = new LinkedHashSet<>();
+        for (String item : rawItems) {
+            if (item.isEmpty()) {
+                return null;
+            }
+            String canonical = toCanonical(item);
+            if (canonical == null) {
+                return null;
+            }
+            uniqueItems.add(canonical);
+        }
+        return new ArrayList<>(uniqueItems);
     }
 
     private static String toCanonical(String item) {
