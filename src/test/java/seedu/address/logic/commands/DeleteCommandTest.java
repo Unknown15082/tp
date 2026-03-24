@@ -17,6 +17,7 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Contact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
@@ -103,6 +104,40 @@ public class DeleteCommandTest {
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_nameNotFound_throwsCommandException() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        DeleteCommand deleteCommand = new DeleteCommand(new Name("Nonexistent"));
+
+        assertCommandFailure(deleteCommand, model,
+                "No person found with name: Nonexistent");
+    }
+
+    @Test
+    public void execute_duplicateName_throwsCommandException() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        Person original = model.getFilteredPersonList().get(0);
+
+        Contact differentContact = new Contact("89123456");
+
+        Person duplicate = new Person(
+                original.getName(),
+                original.getProducts(),
+                original.getLocation(),
+                original.getDeadline(),
+                differentContact
+        );
+
+        model.addPerson(duplicate);
+
+        DeleteCommand deleteCommand = new DeleteCommand(original.getName());
+
+        assertCommandFailure(deleteCommand, model,
+                "Multiple persons found with name: " + original.getName());
     }
 
     @Test
