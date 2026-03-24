@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONTACT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PRODUCTS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_AMY;
@@ -58,6 +57,16 @@ public class AddCommandParserTest {
     }
 
     @Test
+    public void parse_shortPrefixes_success() {
+        String userInput = " n/" + VALID_NAME_BOB + " p/" + VALID_PRODUCTS_BOB + " l/" + VALID_LOCATION_BOB
+                + " d/" + VALID_DEADLINE_BOB + " c/" + VALID_CONTACT_BOB;
+        Person expectedPerson = new Person(new Name(VALID_NAME_BOB), new Products(VALID_PRODUCTS_BOB),
+                new Location(VALID_LOCATION_BOB), new Deadline(VALID_DEADLINE_BOB), new Contact(VALID_CONTACT_BOB));
+
+        assertParseSuccess(parser, userInput, new AddCommand(expectedPerson));
+    }
+
+    @Test
     public void parse_repeatedValue_failure() {
         String validExpectedPersonString = NAME_DESC_BOB + PRODUCTS_DESC_BOB + LOCATION_DESC_BOB
                 + DEADLINE_DESC_BOB + CONTACT_DESC_BOB;
@@ -99,6 +108,23 @@ public class AddCommandParserTest {
     }
 
     @Test
+    public void parse_emptyContactValue_success() {
+        Person expectedPerson = new Person(new Name(AMY.getName().getFullName()), Products.empty(),
+                Location.empty(), Deadline.empty(), Contact.empty());
+
+        assertParseSuccess(parser, NAME_DESC_AMY + " " + PREFIX_CONTACT, new AddCommand(expectedPerson));
+    }
+
+    @Test
+    public void parse_emptyOptionalFields_success() {
+        Person expectedPerson = new Person(new Name(AMY.getName().getFullName()), Products.empty(),
+                Location.empty(), Deadline.empty(), Contact.empty());
+
+        assertParseSuccess(parser, NAME_DESC_AMY + " " + PREFIX_PRODUCTS + " " + PREFIX_LOCATION
+                + " " + PREFIX_DEADLINE + " " + PREFIX_CONTACT, new AddCommand(expectedPerson));
+    }
+
+    @Test
     public void parse_compulsoryFieldMissing_failure() {
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_BOB + PRODUCTS_DESC_BOB + LOCATION_DESC_BOB + DEADLINE_DESC_BOB
@@ -119,9 +145,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PRODUCTS_DESC + LOCATION_DESC_BOB + DEADLINE_DESC_BOB
                 + CONTACT_DESC_BOB, Products.MESSAGE_CONSTRAINTS);
 
-        // invalid location
-        assertParseFailure(parser, NAME_DESC_BOB + PRODUCTS_DESC_BOB + INVALID_LOCATION_DESC + DEADLINE_DESC_BOB
-                + CONTACT_DESC_BOB, Location.MESSAGE_CONSTRAINTS);
+        // invalid location (blank values are allowed)
 
         // invalid deadline
         assertParseFailure(parser, NAME_DESC_BOB + PRODUCTS_DESC_BOB + LOCATION_DESC_BOB + INVALID_DEADLINE_DESC
@@ -134,6 +158,10 @@ public class AddCommandParserTest {
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PRODUCTS_DESC_BOB + LOCATION_DESC_BOB
                 + DEADLINE_DESC_BOB + CONTACT_DESC_BOB,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        // unknown prefix
+        assertParseFailure(parser, NAME_DESC_BOB + " foo/bar",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

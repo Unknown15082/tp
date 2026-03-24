@@ -1,7 +1,7 @@
 {
   "persons": [ {
     "name": "Hans Muster",
-    "products": "Chocolate cake",
+    "products": "Chocolate Cake",
     "location": "4th street",
     "deadline": "2026-03-10",
     "contact": "bob!yahoo"

@@ -70,7 +70,7 @@ public class NameContainsKeywordsPredicateTest {
 
         // Keywords match other fields, but does not match name
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("Chocolate", "Boon", "2026", "91234567"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withProducts("Chocolate cake")
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withProducts("Chocolate Cake")
                 .withLocation("Boon lay").withDeadline("2026-03-10").withContact("91234567").build()));
     }
 

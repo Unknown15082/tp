@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -131,13 +132,14 @@ public class Contact {
             }
 
             if (isValidEmail(entry)) {
-                normalizedEntries.add(entry);
+                normalizedEntries.add(entry.toLowerCase(Locale.ROOT));
                 continue;
             }
 
             return Optional.empty();
         }
 
+        normalizedEntries.sort(String::compareTo);
         return Optional.of(Collections.unmodifiableList(normalizedEntries));
     }
 

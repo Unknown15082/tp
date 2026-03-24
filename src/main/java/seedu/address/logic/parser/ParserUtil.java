@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -22,6 +24,13 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    private static final Map<String, String> SHORT_PREFIX_MAPPING = Map.of(
+            "n/", CliSyntax.PREFIX_NAME.getPrefix(),
+            "p/", CliSyntax.PREFIX_PRODUCTS.getPrefix(),
+            "l/", CliSyntax.PREFIX_LOCATION.getPrefix(),
+            "d/", CliSyntax.PREFIX_DEADLINE.getPrefix(),
+            "c/", CliSyntax.PREFIX_CONTACT.getPrefix()
+    );
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -112,6 +121,38 @@ public class ParserUtil {
     }
 
     /**
+     * Returns a {@code Products} parsed from the given {@code String}, or an empty products list if blank.
+     */
+    public static Products parseOptionalProducts(String products) throws ParseException {
+        requireNonNull(products);
+        return products.trim().isEmpty() ? Products.empty() : parseProducts(products);
+    }
+
+    /**
+     * Returns a {@code Location} parsed from the given {@code String}, or an empty location if blank.
+     */
+    public static Location parseOptionalLocation(String location) throws ParseException {
+        requireNonNull(location);
+        return location.trim().isEmpty() ? Location.empty() : parseLocation(location);
+    }
+
+    /**
+     * Returns a {@code Deadline} parsed from the given {@code String}, or an empty deadline if blank.
+     */
+    public static Deadline parseOptionalDeadline(String deadline) throws ParseException {
+        requireNonNull(deadline);
+        return deadline.trim().isEmpty() ? Deadline.empty() : parseDeadline(deadline);
+    }
+
+    /**
+     * Returns a {@code Contact} parsed from the given {@code String}, or an empty contact if blank.
+     */
+    public static Contact parseOptionalContact(String contact) throws ParseException {
+        requireNonNull(contact);
+        return contact.trim().isEmpty() ? Contact.empty() : parseContact(contact);
+    }
+
+    /**
      * Returns a {@code Tag} parsed from the given {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -136,5 +177,17 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Normalizes short-form prefixes (e.g. n/, p/) to their long-form equivalents.
+     */
+    public static String normalizeShortPrefixes(String argsString) {
+        requireNonNull(argsString);
+        String normalized = argsString;
+        for (Map.Entry<String, String> entry : SHORT_PREFIX_MAPPING.entrySet()) {
+            normalized = normalized.replaceAll("(?<=^|\\s)" + Pattern.quote(entry.getKey()), entry.getValue());
+        }
+        return normalized;
     }
 }

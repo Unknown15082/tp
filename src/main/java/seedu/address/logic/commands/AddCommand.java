@@ -28,7 +28,7 @@ public class AddCommand extends Command {
             + "[" + PREFIX_CONTACT + "CONTACT]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Samuel "
-            + PREFIX_PRODUCTS + "Chocolate cake "
+            + PREFIX_PRODUCTS + "Chocolate Cake "
             + PREFIX_LOCATION + "Boon lay "
             + PREFIX_DEADLINE + "2026-03-10 "
             + PREFIX_CONTACT + "91234567";

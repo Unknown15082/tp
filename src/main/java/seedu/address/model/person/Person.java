@@ -54,7 +54,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both customers have the same name and contact.
+     * Returns true if both customers have the same name.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -63,8 +63,7 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName())
-                && otherPerson.getContact().equals(getContact());
+                && otherPerson.getName().equals(getName());
     }
 
     /**

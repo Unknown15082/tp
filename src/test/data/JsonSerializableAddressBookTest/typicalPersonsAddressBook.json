@@ -2,43 +2,43 @@
   "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
   "persons" : [ {
     "name" : "Alice Pauline",
-    "products" : "Chocolate cake",
+    "products" : "Chocolate Cake",
     "location" : "123, Jurong West Ave 6, #08-111",
     "deadline" : "2026-03-10",
     "contact" : "94351253"
   }, {
     "name" : "Benson Meier",
-    "products" : "Vanilla cake",
+    "products" : "Vanilla Cake",
     "location" : "311, Clementi Ave 2, #02-25",
     "deadline" : "2026-03-12",
     "contact" : "98765432"
   }, {
     "name" : "Carl Kurz",
-    "products" : "Red velvet cupcakes",
+    "products" : "Muffin",
     "location" : "wall street",
     "deadline" : "2026-04-01",
     "contact" : "95352563"
   }, {
     "name" : "Daniel Meier",
-    "products" : "Tiramisu",
+    "products" : "Brownie",
     "location" : "10th street",
     "deadline" : "2026-04-02",
     "contact" : "87652533"
   }, {
     "name" : "Elle Meyer",
-    "products" : "Cheesecake",
+    "products" : "Cookie",
     "location" : "michegan ave",
     "deadline" : "2026-04-03",
     "contact" : "94822240"
   }, {
     "name" : "Fiona Kunz",
-    "products" : "Chocolate tart",
+    "products" : "Chocolate Cake",
     "location" : "little tokyo",
     "deadline" : "2026-04-04",
     "contact" : "94824270"
   }, {
     "name" : "George Best",
-    "products" : "Macarons",
+    "products" : "Vanilla Cake",
     "location" : "4th street",
     "deadline" : "2026-04-05",
     "contact" : "94824420"

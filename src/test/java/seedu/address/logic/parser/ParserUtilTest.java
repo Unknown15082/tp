@@ -23,14 +23,14 @@ import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PRODUCTS = "Cake, @@@";
+    private static final String INVALID_PRODUCTS = "Tiramisu";
     private static final String INVALID_LOCATION = " ";
     private static final String INVALID_DEADLINE = "2026-13-40";
     private static final String INVALID_CONTACT = "bob!yahoo";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PRODUCTS = "Chocolate cake, Vanilla_cake";
+    private static final String VALID_PRODUCTS = "Chocolate Cake, Vanilla Cake";
     private static final String VALID_LOCATION = "123 Main Street #0505";
     private static final String VALID_DEADLINE = "2026-03-10";
     private static final String VALID_CONTACT = "91234567; rachel@example.com";

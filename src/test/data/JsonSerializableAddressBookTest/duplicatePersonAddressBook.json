@@ -1,13 +1,13 @@
 {
   "persons": [ {
     "name": "Alice Pauline",
-    "products": "Chocolate cake",
+    "products": "Chocolate Cake",
     "location": "123, Jurong West Ave 6, #08-111",
     "deadline": "2026-03-10",
     "contact": "94351253"
   }, {
     "name": "Alice Pauline",
-    "products": "Macarons",
+    "products": "Muffin",
     "location": "4th street",
     "deadline": "2026-04-10",
     "contact": "94351253"

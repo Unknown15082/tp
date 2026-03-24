@@ -83,7 +83,7 @@ public class EditCommandParserTest {
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + INVALID_PRODUCTS_DESC, Products.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + INVALID_LOCATION_DESC, Location.MESSAGE_CONSTRAINTS);
+        // invalid location (blank values are allowed)
         assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC, Deadline.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + INVALID_CONTACT_DESC, Contact.MESSAGE_CONSTRAINTS);
 
@@ -113,6 +113,18 @@ public class EditCommandParserTest {
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withProducts(VALID_PRODUCTS_BOB)
                 .withContact(VALID_CONTACT_AMY).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_shortPrefixes_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " n/" + VALID_NAME_AMY + " p/" + VALID_PRODUCTS_AMY;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+                .withProducts(VALID_PRODUCTS_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -150,6 +162,34 @@ public class EditCommandParserTest {
         userInput = targetIndex.getOneBased() + CONTACT_DESC_BOB;
         descriptor = new EditPersonDescriptorBuilder().withContact(VALID_CONTACT_BOB).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_emptyContactValue_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_CONTACT;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setContact(Contact.empty());
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_emptyOptionalFields_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_PRODUCTS + " " + PREFIX_LOCATION
+                + " " + PREFIX_DEADLINE + " " + PREFIX_CONTACT;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setProducts(Products.empty());
+        descriptor.setLocation(Location.empty());
+        descriptor.setDeadline(Deadline.empty());
+        descriptor.setContact(Contact.empty());
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

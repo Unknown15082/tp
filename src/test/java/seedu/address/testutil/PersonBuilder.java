@@ -13,7 +13,7 @@ import seedu.address.model.person.Products;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
-    public static final String DEFAULT_PRODUCTS = "Chocolate cake";
+    public static final String DEFAULT_PRODUCTS = "Chocolate Cake";
     public static final String DEFAULT_LOCATION = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_CONTACT = "85355255";
 

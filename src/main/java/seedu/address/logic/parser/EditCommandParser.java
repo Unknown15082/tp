@@ -24,8 +24,9 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PRODUCTS, PREFIX_LOCATION,
-                PREFIX_DEADLINE, PREFIX_CONTACT);
+        String normalizedArgs = ParserUtil.normalizeShortPrefixes(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalizedArgs, PREFIX_NAME, PREFIX_PRODUCTS,
+                PREFIX_LOCATION, PREFIX_DEADLINE, PREFIX_CONTACT);
 
         Index index;
 
@@ -44,16 +45,20 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PRODUCTS).isPresent()) {
-            editPersonDescriptor.setProducts(ParserUtil.parseProducts(argMultimap.getValue(PREFIX_PRODUCTS).get()));
+            editPersonDescriptor.setProducts(ParserUtil.parseOptionalProducts(
+                    argMultimap.getValue(PREFIX_PRODUCTS).get()));
         }
         if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
-            editPersonDescriptor.setLocation(ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get()));
+            editPersonDescriptor.setLocation(ParserUtil.parseOptionalLocation(
+                    argMultimap.getValue(PREFIX_LOCATION).get()));
         }
         if (argMultimap.getValue(PREFIX_DEADLINE).isPresent()) {
-            editPersonDescriptor.setDeadline(ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get()));
+            editPersonDescriptor.setDeadline(ParserUtil.parseOptionalDeadline(
+                    argMultimap.getValue(PREFIX_DEADLINE).get()));
         }
         if (argMultimap.getValue(PREFIX_CONTACT).isPresent()) {
-            editPersonDescriptor.setContact(ParserUtil.parseContact(argMultimap.getValue(PREFIX_CONTACT).get()));
+            editPersonDescriptor.setContact(ParserUtil.parseOptionalContact(
+                    argMultimap.getValue(PREFIX_CONTACT).get()));
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

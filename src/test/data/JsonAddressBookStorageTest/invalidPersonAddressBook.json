@@ -1,7 +1,7 @@
 {
   "persons": [ {
     "name": "Person with invalid name field: Ha!ns Mu@ster",
-    "products": "Chocolate cake",
+    "products": "Chocolate Cake",
     "location": "4th street",
     "deadline": "2026-03-10",
     "contact": "9482424"

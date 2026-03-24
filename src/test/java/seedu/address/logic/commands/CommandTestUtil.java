@@ -28,8 +28,8 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PRODUCTS_AMY = "Chocolate cake";
-    public static final String VALID_PRODUCTS_BOB = "Vanilla cake";
+    public static final String VALID_PRODUCTS_AMY = "Chocolate Cake";
+    public static final String VALID_PRODUCTS_BOB = "Vanilla Cake";
     public static final String VALID_LOCATION_AMY = "Block 312, Amy Street 1";
     public static final String VALID_LOCATION_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_DEADLINE_AMY = "2026-03-10";
@@ -49,7 +49,7 @@ public class CommandTestUtil {
     public static final String CONTACT_DESC_BOB = " " + PREFIX_CONTACT + VALID_CONTACT_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PRODUCTS_DESC = " " + PREFIX_PRODUCTS + "Cake, @@@";
+    public static final String INVALID_PRODUCTS_DESC = " " + PREFIX_PRODUCTS + "Tiramisu";
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION; // empty string not allowed
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "2026-13-40";
     public static final String INVALID_CONTACT_DESC = " " + PREFIX_CONTACT + "bob!yahoo";

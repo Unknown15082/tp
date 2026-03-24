@@ -28,7 +28,7 @@ ClientEase is a **desktop app for managing contacts, optimized for use via a Com
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to ClientEase.
+   * `add name/John Doe products/Chocolate Cake location/John street, block 123, #01-01 deadline/2026-03-10 contact/johnd@example.com` : Adds a customer named `John Doe` to ClientEase.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -47,16 +47,16 @@ ClientEase is a **desktop app for managing contacts, optimized for use via a Com
 **:information_source: Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `add name/NAME`, `NAME` is a parameter which can be used as `add name/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g `name/NAME [products/PRODUCTS]` can be used as `name/John Doe products/Muffin` or as `name/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  ClientEase does not currently use repeatable prefixes in its commands.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `name/NAME products/PRODUCTS`, `products/PRODUCTS name/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -77,15 +77,22 @@ Format: `help`
 
 Adds a person to ClientEase.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]`.
+
+Short prefixes are also supported: `n/` for `name/`, `p/` for `products/`,
+`l/` for `location/`, `d/` for `deadline/`, and `c/` for `contact/`.
+
+Products are optional. If omitted, the customer will have no products recorded.
+Customers are considered duplicates if they share the same name.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+Products are limited to these placeholder items: Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie.
+Enter them as a comma-separated list (up to 5 items), e.g. `products/Chocolate Cake, Muffin`.
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add name/John Doe products/Chocolate Cake location/John street, block 123, #01-01 deadline/2026-03-10 contact/johnd@example.com`
+* `add name/Betsy Crowe products/Vanilla Cake, Cookie contact/12345678`
 
 ### Listing all persons : `list`
 
@@ -97,18 +104,18 @@ Format: `list`
 
 Edits an existing person in ClientEase.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [name/NAME] [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]`
+Short prefixes are supported: `n/` for `name/`, `p/` for `products/`,
+`l/` for `location/`, `d/` for `deadline/`, and `c/` for `contact/`.
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* Products must be chosen from the placeholder list: Muffin, Chocolate Cake, Vanilla Cake, Brownie, Cookie.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 contact/91234567` Edits the contact of the 1st person to be `91234567`.
+*  `edit 2 name/Betsy Crower products/Muffin location/Newgate Prison` Edits the name, products, and location of the 2nd person.
 
 ### Locating persons by name: `find`
 
@@ -194,10 +201,10 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]` <br> e.g., `add name/James Ho products/Chocolate Cake location/123, Clementi Rd deadline/2026-03-10 contact/jamesho@example.com`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [name/NAME] [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]`<br> e.g.,`edit 2 name/James Lee contact/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`

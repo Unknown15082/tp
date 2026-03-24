@@ -7,6 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCTS;
 
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Contact;
@@ -21,12 +25,24 @@ import seedu.address.model.person.Products;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    private static final Pattern PREFIX_PATTERN = Pattern.compile("(?<=^|\\s)([A-Za-z]+/)");
+    private static final Set<String> VALID_PREFIXES = Set.of(
+            PREFIX_NAME.getPrefix(),
+            PREFIX_PRODUCTS.getPrefix(),
+            PREFIX_LOCATION.getPrefix(),
+            PREFIX_DEADLINE.getPrefix(),
+            PREFIX_CONTACT.getPrefix()
+    );
+
     /**
      * Returns an {@code AddCommand} parsed from the given {@code String} of arguments.
      * @throws ParseException if the user input does not conform the expected format.
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PRODUCTS, PREFIX_LOCATION,
+        String normalizedArgs = ParserUtil.normalizeShortPrefixes(args);
+        verifyNoUnknownPrefixes(normalizedArgs);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalizedArgs, PREFIX_NAME, PREFIX_PRODUCTS,
+                PREFIX_LOCATION,
                 PREFIX_DEADLINE, PREFIX_CONTACT);
 
         if (argMultimap.getValue(PREFIX_NAME).isEmpty()
@@ -43,22 +59,22 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Products products = Products.empty(); // defaults when products are missing
         if (argMultimap.getValue(PREFIX_PRODUCTS).isPresent()) {
-            products = ParserUtil.parseProducts(argMultimap.getValue(PREFIX_PRODUCTS).get()); // parse products input
+            products = ParserUtil.parseOptionalProducts(argMultimap.getValue(PREFIX_PRODUCTS).get());
         }
 
         Location location = Location.empty(); // defaults when location is missing
         if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
-            location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get()); // parse location input
+            location = ParserUtil.parseOptionalLocation(argMultimap.getValue(PREFIX_LOCATION).get());
         }
 
         Deadline deadline = Deadline.empty(); // defaults to no deadline when missing
         if (argMultimap.getValue(PREFIX_DEADLINE).isPresent()) {
-            deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get()); // parse deadline input
+            deadline = ParserUtil.parseOptionalDeadline(argMultimap.getValue(PREFIX_DEADLINE).get());
         }
 
         Contact contact = Contact.empty(); // defaults when contact is missing
         if (argMultimap.getValue(PREFIX_CONTACT).isPresent()) {
-            contact = ParserUtil.parseContact(argMultimap.getValue(PREFIX_CONTACT).get()); // parse contact input
+            contact = ParserUtil.parseOptionalContact(argMultimap.getValue(PREFIX_CONTACT).get());
         }
 
         Person person = new Person(name, products, location, deadline, contact); // creates new customer object
@@ -66,4 +82,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         return new AddCommand(person);
     }
 
+    private void verifyNoUnknownPrefixes(String args) throws ParseException {
+        Matcher matcher = PREFIX_PATTERN.matcher(args);
+        while (matcher.find()) {
+            String prefix = matcher.group(1);
+            if (!VALID_PREFIXES.contains(prefix)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+        }
+    }
 }
