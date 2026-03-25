@@ -392,9 +392,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to find a customer using a keyword.
 2.  ClientEase displays a list of matching customers.
 3.  User selects a customer from the list.
-4.  User requests to edit the selected customer's details by providing the new details. 
+4.  User requests to edit the selected customer's details by providing the new details.
 5.  ClientEase validates the new details.
-6.  ClientEase updates the customer record and displays the updated customer profile. 
+6.  ClientEase updates the customer record and displays the updated customer profile.
 
     Use case ends.
 
@@ -403,13 +403,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. No customers match the search keyword.
 
     * 1a1. ClientEase displays a message indicating that no customers were found.
-  
+
       Use case ends.
 
 * 5a. The new details provided are invalid.
 
     * 5a1. ClientEase displays an error message indicating the invalid field.
-  
+
       Use case resumes at step 4.
 
 *{More to be added}*
