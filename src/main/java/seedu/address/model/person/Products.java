@@ -31,11 +31,10 @@ public class Products {
 
     private static final Map<String, String> CANONICAL_BY_LOWERCASE = buildCanonicalLookup();
     private static final Products EMPTY = new Products(Collections.emptyMap());
-
-    private final Map<String, Integer> itemMap;
-
     private static final java.util.logging.Logger logger =
             seedu.address.commons.core.LogsCenter.getLogger(Products.class);
+
+    private final Map<String, Integer> itemMap;
 
     /**
      * Constructs a {@code Products} from a comma-separated string.
