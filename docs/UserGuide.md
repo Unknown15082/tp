@@ -299,7 +299,7 @@ find KEYWORD [MORE_KEYWORDS]
 
 ### Deleting a Customer : `delete`
 
-Deletes the specified person from ClientEase.
+Deletes a customer from ClientEase using either their displayed index or exact name.
 
 **Format:**
 ```
@@ -312,8 +312,19 @@ delete INDEX
 
 **Examples:**
 
-- `list` followed by `delete 2` deletes the 2nd person in ClientEase.
-- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+- `list` followed by `delete 2` deletes the 2nd customer in ClientEase.
+- `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
+
+```
+delete NAME
+```
+
+- Deletes the customer with the given `NAME`.
+- Matching is **case-insensitive** and ignores extra spaces.
+
+**Examples:**
+
+- `delete John Doe` `delete john doe` `delete John Doe [extra space]` All delete the same customer 'John Doe'
 
 ---
 
