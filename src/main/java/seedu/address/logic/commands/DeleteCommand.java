@@ -93,10 +93,6 @@ public class DeleteCommand extends Command {
             throw new CommandException("No person found with name: " + targetName);
         }
 
-        if (matches.size() > 1) {
-            throw new CommandException("Multiple persons found with name: " + targetName);
-        }
-
         Person personToDelete = matches.get(0);
         model.deletePerson(personToDelete);
 
