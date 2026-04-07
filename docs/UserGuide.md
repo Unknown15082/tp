@@ -320,18 +320,18 @@ Finds persons whose names contain any of the given keywords.
 find [name/NAME] [contact/CONTACT] [location/LOCATION] [products/PRODUCTS]
 ```
 
+- `NAME`, `CONTACT`, `LOCATION` and `PRODUCTS` are words separated by space.
 - The search is case-insensitive. e.g. `hans` will match `Hans`.
-- The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 - The name, contact, location, and product list of each users will be searched.
-- For name and contact, only full words will be matched. e.g. `Han` will not match `Hans`.
-- For location, words containing the keyword will be matched. e.g. `gate` will match `Newgate`.
-- For products, only the exact product will be matched. e.g. `Cake` will not match `Chocolate Cake`.
-- Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+- For name and products, only full words will be matched. e.g. `Han` will not match `Hans`.
+- For location and contact, any substring will be matched. e.g. `123` will match `1234@mail.com`.
+- Searching multiple personal details (name, contact, or location) or multiple products will match any of those items; however, searching across both categories will only show results that match at least one from each.
 
 **Examples:**
 
 - `find name/John` returns `john` and `John Doe`
 - `find name/alex name/david` returns `Alex Yeoh`, `David Li`
+- `find name/alex name/david p/cake` returns `Alex Yeoh`, where `Alex Yeoh` has `Muffin` and `David Li` has `Chocolate Cake`
 
 ![result for 'find alex david'](images/findAlexDavidResult.png)
 

@@ -3,23 +3,25 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * Tests that a {@code Person}'s {@code Products} contains any product given.
  */
-public class ProductsPredicate implements Predicate<Person> {
+public class ProductsContainKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public ProductsPredicate(List<String> keywords) {
+    public ProductsContainKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Person person) {
-        List<String> items = person.getProducts().getItems();
         return keywords.stream()
-                .anyMatch(items::contains);
+                .anyMatch(keyword -> person.getProducts().getItems().stream()
+                        .anyMatch(product ->
+                                StringUtil.containsWordIgnoreCase(product, keyword)));
     }
 
     @Override
@@ -29,11 +31,11 @@ public class ProductsPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ProductsPredicate)) {
+        if (!(other instanceof ProductsContainKeywordsPredicate)) {
             return false;
         }
 
-        ProductsPredicate otherProductsPredicate = (ProductsPredicate) other;
+        ProductsContainKeywordsPredicate otherProductsPredicate = (ProductsContainKeywordsPredicate) other;
         return keywords.equals(otherProductsPredicate.keywords);
     }
 

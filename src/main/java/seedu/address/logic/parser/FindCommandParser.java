@@ -24,7 +24,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Products;
-import seedu.address.model.person.ProductsPredicate;
+import seedu.address.model.person.ProductsContainKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -70,12 +70,21 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<String> productsKeywords = getAndCheckKeywords(argMultimap, PREFIX_PRODUCTS,
                 PREFIX_PRODUCTS_SHORT, "Products", Products.MAX_LENGTH);
 
-        Predicate<Person> namePred = new NameContainsKeywordsPredicate(nameKeywords);
-        Predicate<Person> contactPred = new ContactContainsKeywordsPredicate(contactKeywords);
-        Predicate<Person> locationPred = new LocationContainsKeywordsPredicate(locationKeywords);
-        Predicate<Person> productsPred = new ProductsPredicate(productsKeywords);
+        Predicate<Person> fullPred;
 
-        Predicate<Person> fullPred = namePred.or(contactPred).or(locationPred).or(productsPred);
+        if (nameKeywords.isEmpty() && contactKeywords.isEmpty() && locationKeywords.isEmpty()) {
+            fullPred = new ProductsContainKeywordsPredicate(productsKeywords);
+        } else {
+            Predicate<Person> namePred = new NameContainsKeywordsPredicate(nameKeywords);
+            Predicate<Person> contactPred = new ContactContainsKeywordsPredicate(contactKeywords);
+            Predicate<Person> locationPred = new LocationContainsKeywordsPredicate(locationKeywords);
+
+            fullPred = namePred.or(contactPred).or(locationPred);
+
+            if (!productsKeywords.isEmpty()) {
+                fullPred = fullPred.or(new ProductsContainKeywordsPredicate(productsKeywords));
+            }
+        }
 
         return new FindCommand(fullPred);
     }
