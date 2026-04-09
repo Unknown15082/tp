@@ -12,6 +12,7 @@ import java.util.Objects;
  */
 public class Product {
 
+    public static final int MAX_LENGTH = 80;
     public static final String MESSAGE_CONSTRAINTS =
             "Error: Invalid product name. Names must be 1 to 80 characters long, and cannot contain ',' or ':'.";
 
