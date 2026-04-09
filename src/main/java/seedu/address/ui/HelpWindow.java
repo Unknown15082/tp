@@ -36,24 +36,29 @@ public class HelpWindow extends UiPart<Stage> {
                     + " INDEX [fields...]\n"
                     + "    Edit a customer\n\n"
 
-                    + DeleteCommand.COMMAND_WORD + " INDEX or NAME (alias: "
+                    + DeleteCommand.COMMAND_WORD
+                    + " INDEX or NAME (alias: "
                     + DeleteCommand.COMMAND_ALIAS + ")\n"
                     + "    Delete a customer\n\n"
 
-                    + FindCommand.COMMAND_WORD + " KEYWORD\n"
-                    + "    Find customers (searches all fields)\n\n"
+                    + FindCommand.COMMAND_WORD
+                    + " [fields for find...]\n"
+                    + "    Find customers\n\n"
 
                     + ListCommand.COMMAND_WORD + " (alias: "
                     + ListCommand.COMMAND_ALIAS + ")\n"
                     + "    List all customers\n\n"
 
-                    + ProductCommand.COMMAND_WORD + " add product/NAME (or p/NAME)\n"
+                    + ProductCommand.COMMAND_WORD
+                    + " add product/NAME (or p/NAME)\n"
                     + "    Add a product to the catalog\n\n"
 
-                    + ProductCommand.COMMAND_WORD + " delete product/NAME (or p/NAME)\n"
+                    + ProductCommand.COMMAND_WORD
+                    + " delete product/NAME (or p/NAME)\n"
                     + "    Delete a product from the catalog\n\n"
 
-                    + ProductCommand.COMMAND_WORD + " list\n"
+                    + ProductCommand.COMMAND_WORD
+                    + " list\n"
                     + "    List all products\n\n"
 
                     + ClearCommand.COMMAND_WORD + "\n"
@@ -67,6 +72,9 @@ public class HelpWindow extends UiPart<Stage> {
 
                     + "*[fields...] = name/NAME products/PRODUCTS location/LOCATION deadline/DATE contact/CONTACT "
                     + "(choose at least one field)\n\n"
+
+                    + "*[fields for find...] = name/NAME product/PRODUCT location/LOCATION contact/CONTACT "
+                    + "(each can repeat multiple times)\n\n"
 
                     + "Refer to the user guide:\n"
                     + USERGUIDE_URL;

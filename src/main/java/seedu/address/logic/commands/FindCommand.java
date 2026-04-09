@@ -1,6 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRODUCT;
 
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -19,10 +23,16 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds customers. "
+            + "Parameters: "
+            + "[" + PREFIX_NAME + "NAME]..."
+            + "[" + PREFIX_PRODUCT + "PRODUCT]..."
+            + "[" + PREFIX_LOCATION + "LOCATION]..."
+            + "[" + PREFIX_CONTACT + "CONTACT]...\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "alice "
+            + PREFIX_NAME + "bob "
+            + PREFIX_CONTACT + "91234567";
 
     private static final Logger logger = LogsCenter.getLogger(FindCommand.class);
 

@@ -136,7 +136,7 @@ Expected output: `Added Customer: Jane Tan`
 
 **Step 3 - Find a customer by name:**
 ```
-find Jane
+find name/Jane
 ```
 Expected output: Only customers whose name matches "Jane" are shown.
 
@@ -333,10 +333,13 @@ Finds persons whose names contain any of the given keywords.
 
 **Format:**
 ```
-find [name/NAME] [contact/CONTACT] [location/LOCATION] [products/PRODUCTS]
+find [name/NAME]...[contact/CONTACT]...[location/LOCATION]...[product/PRODUCT]...
 ```
 
-- `NAME`, `CONTACT`, `LOCATION` and `PRODUCTS` are words separated by space.
+Short prefixes are supported: `n/` for `name/`, `c/` for `contact/`, `l/` for `location/`, and `p/` for `product/`.
+
+- `NAME` and `PRODUCT` are single words, `CONTACT` and `LOCATION` are strings. Each field can repeat multiple times.
+- At least one of the fields needs to be provided once.
 - The search is case-insensitive. e.g. `hans` will match `Hans`.
 - The name, contact, location, and product list of each users will be searched.
 - For name and products, only full words will be matched. e.g. `Han` will not match `Hans`.
@@ -347,7 +350,7 @@ find [name/NAME] [contact/CONTACT] [location/LOCATION] [products/PRODUCTS]
 
 - `find name/John` returns `john` and `John Doe`
 - `find name/alex name/david` returns `Alex Yeoh`, `David Li`
-- `find name/alex name/david p/cake` returns `David Li`, where `Alex Yeoh` has `Muffin` and `David Li` has `Chocolate Cake`
+- `find name/alex name/david product/cake` returns `David Li`, where `Alex Yeoh` has `Muffin` and `David Li` has `Chocolate Cake`
 
 ![result for 'find alex david'](images/findAlexDavidResult.png)
 
@@ -480,7 +483,7 @@ name, consider differentiating them, e.g. `John Doe (Clementi)` and `John Doe (T
 | **Clear** | `clear` | `clear`                                                                                              |
 | **Exit** | `exit` | `exit`                                                                                               |
 
-> **Tip:** Shorthand prefixes for `add` and `edit`: `n/` for `name/`, `p/` for `products/`, `l/` for `location/`,
+> **Tip:** Shorthand prefixes for `add`, `edit`, and `find`: `n/` for `name/`, `p/` for `products/` and `product/`, `l/` for `location/`,
 > `d/` for `deadline/`, and `c/` for `contact/`. Example: `add n/John Doe p/Muffin` is equivalent to
 > `add name/John Doe products/Muffin`.
 
