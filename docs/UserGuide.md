@@ -33,6 +33,7 @@ do those updates in seconds with short commands, without switching between multi
 - [Features](#features)
     - [Notes on Command Format](#notes-on-command-format)
     - [Data Normalisation](#data-normalisation)
+    - [The "Unique Name" Rule](#the-unique-name-rule)
     - [Viewing Help : `help`](#viewing-help--help)
     - [Adding a Customer : `add`](#adding-a-customer--add)
     - [Listing All Customers : `list`](#listing-all-customers--list)
@@ -197,6 +198,17 @@ To keep stored data consistent and reduce accidental duplicates, ClientEase norm
 - Example: use `find c/+6591234567` instead of `find c/+65 9123 4567`.
 
 > **Important:** This applies only to spaces in phone numbers. Hyphens and parentheses are not accepted as valid phone-number input.
+
+### The "Unique Name" Rule
+
+ClientEase is designed for maximum efficiency. To allow you to edit or delete customers using only their names, instead of confusing ID numbers, the system requires every customer to have a unique name.
+
+Why? This ensures that commands like `delete John Doe` are always unambiguous and fast to execute.
+
+Handling namesakes: If you have two customers with the same name, we recommend adding a distinguishing suffix, such as:
+
+- `John Doe`
+- `John Doe Jr`
 
 ---
 
