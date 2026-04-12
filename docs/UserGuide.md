@@ -202,7 +202,7 @@ To keep stored data consistent and reduce accidental duplicates, ClientEase norm
 
 ### The "Unique Name" Rule
 
-ClientEase is designed for maximum efficiency. To allow you to edit or delete customers using only their names, instead of confusing ID numbers, the system requires every customer to have a unique name.
+ClientEase is designed for maximum efficiency. To allow you to delete customers using only their names, instead of relying only on index numbers, the system requires every customer to have a unique name.
 
 Why? This ensures that commands like `delete John Doe` are always unambiguous and fast to execute.
 
@@ -244,7 +244,7 @@ add name/NAME [products/PRODUCTS] [location/LOCATION] [deadline/DEADLINE] [conta
 | Parameter | Required? | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name/NAME` | Yes | 1-100 characters after trimming and space normalisation. Only ASCII letters (A-Z), spaces, `.`, `'`, and `-`. Must contain at least one letter. Names are unique case-insensitively and with repeated spaces collapsed.                                                                                                                                                                                                                                                          |
-| `products/PRODUCTS` | No | Comma-separated list of product names from the product catalogue. There is no fixed limit on the number of product names, but quantities must not exceed 10,000 per product or 100,000 in total. Items can optionally include a quantity using a colon (e.g., Muffin:3); if omitted, quantity defaults to 1. Matching is case-insensitive and spaces are normalised. Empty items are invalid. Duplicate product names are allowed and their quantities are summed. Use `product add` to create products before referencing them. |
+| `products/PRODUCTS` | No | Comma-separated list of product names from the product catalogue. There is no fixed limit on the number of product names, but quantities must not exceed 10,000 per product or 100,000 in total. Items can optionally include a quantity using a colon (e.g., Muffin:3); if omitted, quantity defaults to 1. Quantities must be positive integers, so `0` is not accepted. Matching is case-insensitive and spaces are normalised. Empty items are invalid. Duplicate product names are allowed and their quantities are summed. Use `product add` to create products before referencing them. |
 | `location/LOCATION` | No | Non-blank after trimming. Maximum length 200 characters.                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `deadline/DEADLINE` | No | Accepted formats: `yyyy-MM-dd HH:mm`, `yyyy-MM-dd`, `dd/MM/yyyy` (24-hour time). Entries without a time default to **23:59**.                                                                                                                                                                                                                                                                                                                                                    |
 | `contact/CONTACT` | No | Semicolon-separated entries. Each entry must be either an 8-digit local phone number or an international phone in `+<2-3 digit country code><1-12 digit number>` format; spaces in phone numbers are ignored. Emails are up to 100 characters, must start with an alphanumeric character, contain only letters, digits, dots, and hyphens, and contain exactly one `@` with an alphanumeric at the start of the domain. Entries are stored with phone spaces removed and emails lowercased, then sorted. Empty entries (e.g. trailing or double `;`) are invalid. |
@@ -314,7 +314,7 @@ product list
 - You cannot delete a product if any customer is currently using it.
 - `product` commands, subcommands, and the `product/` or `p/` prefix are case-insensitive.
 - `product list` shows products in alphabetical order.
-- If the catalogue is empty, `add` and `edit` will reject any `products/` input and show "(no products in catalogue)" in the
+- If the catalogue is empty, `add` and `edit` will reject any `products/` input and show "(no products in catalog)" in the
   allowed list.
 
 **Examples:**
@@ -339,6 +339,9 @@ Short prefixes are supported: `n/` for `name/`, `p/` for `products/`, `l/` for `
 - At least one of the optional fields must be provided.
 - Existing values will be updated to the input values.
 - Products follow the same constraints as `add`.
+- `products/` replaces the customer's entire current product list. Quantity `0` is not accepted.
+- To remove one product while keeping others, re-enter the full list of products you want to keep.
+- To remove all products from a customer, use an empty products field: `edit INDEX products/`.
 
 **Examples:**
 
@@ -353,6 +356,18 @@ Effect: Updates the contact of the 1st customer to `91234567`.
 edit 2 name/Betsy Crower products/Muffin location/Newgate Prison
 ```
 Effect: Updates the name, products, and location of the 2nd customer.
+
+**Example 3: Remove one product but keep another**
+```
+edit 1 products/Muffin:2
+```
+Effect: Replaces the customer's entire product list so that only `Muffin:2` remains.
+
+**Example 4: Remove all products**
+```
+edit 1 products/
+```
+Effect: Clears the customer's product list completely.
 
 
 ---
@@ -369,7 +384,7 @@ find [name/NAME]...[contact/CONTACT]...[location/LOCATION]...[product/PRODUCT]..
 Short prefixes are supported: `n/` for `name/`, `c/` for `contact/`, `l/` for `location/`, and `p/` for `product/`.
 
 - `NAME` and `PRODUCT` are single words, `CONTACT` and `LOCATION` are strings. Each field can repeat multiple times.
-- At least one of the fields needs to be provided once.
+- At least one field should be provided. Empty values are ignored.
 - The search is case-insensitive. e.g. `hans` will match `Hans`.
 - The name, contact, location, and product list of each customer will be searched.
 - For name and products, only full words will be matched. e.g. `Han` will not match `Hans`.
@@ -511,9 +526,13 @@ name, consider differentiating them, e.g. `John Doe (Clementi)` and `John Doe (T
 | **List** | `list` | `list`                                                                                               |
 | **Edit** | `edit INDEX [name/NAME] [products/PRODUCTS] [location/LOCATION] [deadline/DATE] [contact/CONTACT]` | `edit 2 name/James Lee contact/jameslee@example.com`                                                 |
 | **Find** | `find [name/NAME]...[contact/CONTACT]...[location/LOCATION]...[product/PRODUCT]...` | `find name/James` |
-| **Delete** | `delete INDEX` | `delete 3`                                                                                           |
+| **Delete (index)** | `delete INDEX` | `delete 3` |
+| **Delete (name)** | `delete NAME` | `delete John Doe` |
 | **Clear** | `clear` | `clear`                                                                                              |
 | **Exit** | `exit` | `exit`                                                                                               |
+| **Product add** | `product add product/NAME` or `product add p/NAME` | `product add product/Muffin` |
+| **Product delete** | `product delete product/NAME` or `product delete p/NAME` | `product delete p/Muffin` |
+| **Product list** | `product list` | `product list` |
 
 > **Tip:** Shorthand prefixes for `add`, `edit`, and `find`: `n/` for `name/`, `p/` for `products/` and `product/`, `l/` for `location/`,
 > `d/` for `deadline/`, and `c/` for `contact/`. Example: `add n/John Doe p/Muffin` is equivalent to
