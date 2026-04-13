@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -70,7 +71,7 @@ public class AddCommand extends Command {
 
         logger.info("Adding customer: " + toAdd.getName());
         model.addPerson(toAdd); // saves new customer in model
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName())); // shows success message
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd))); // shows success message
     }
 
     private void validateProductsExist(Model model) throws CommandException {
