@@ -608,6 +608,6 @@ testers are expected to do more *exploratory* testing.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** To simplify the process of testing commands such as `clear`, testers can back up the data files in the `data/` directory.
 
-After executing the command and checking the result, testers can restore the data file by restoring the backed up data file. This helps testers avoid re-adding customer data multiple times.
+After executing the command and checking the result, testers can restore the data file by copying the backed up data file to the `/data` directory. This helps testers avoid re-adding customer data multiple times.
 </div>
 
