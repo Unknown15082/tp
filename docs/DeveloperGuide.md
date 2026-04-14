@@ -541,6 +541,41 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `delete 1`
        Expected: First customer is deleted from the list. Details of the deleted customer shown in the status message. Timestamp in the status bar is updated.
 
+### Finding a customer
+
+1. Finding customers by name
+
+   1. Prerequisites: Multiple customers in the list, including at least one named `Alex` and one named `David`.
+
+   2. Test case: `find name/Alex`<br>
+      Expected: Only customers whose names contain the full word `Alex` are shown. Number of customers found shown in the status message.
+
+   3. Test case: `find name/alex` (lowercase)<br>
+      Expected: Same result as above — the search is case-insensitive.
+
+   4. Test case: `find name/Alex name/David` (multiple name keywords)<br>
+      Expected: Customers whose names contain `Alex` or `David` are shown. This is an OR search across names.
+
+   5. Test case: `find name/Al` (partial word)<br>
+      Expected: No customers are found. Full-word matching applies to names. Status message shows 0 customers listed.
+
+2. Finding customers by other fields
+
+   1. Test case: `find location/Tampines`<br>
+      Expected: All customers whose location contains the substring `Tampines` are shown.
+
+   2. Test case: `find product/Muffin`<br>
+      Expected: All customers who have `Muffin` (full word, case-insensitive) in their product list are shown.
+
+   3. Test case: `find name/David product/Cake`<br>
+      Expected: Only customers who match at least one name keyword AND at least one product keyword are shown (cross-category AND, within-category OR).
+
+   4. Test case: `find name/` (empty value)<br>
+      Expected: No customers are matched. Status message shows 0 customers listed.
+
+   5. Test case: `find` (no fields provided)<br>
+      Expected: Error message indicating that at least one field prefix must be provided. Status bar remains the same.
+
 
 ### Managing Products
 
