@@ -400,7 +400,7 @@ Opens a help window that provides a quick overview of available commands and a l
 :information_source: **Notes:**
 - The help window does **not block** the main application — you can continue using ClientEase while it is open.
 - If the help window is already open, running `help` again will focus on the existing window.
-- 
+
 </div>
 
 <div markdown="1" class="alert alert-primary">
